@@ -3,9 +3,10 @@ session_start();
 
 // Array de produtos
 $produtos = [
-    ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/267436-800-800.webp"],
+    ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/nike-airmax.webp"],
     ["nome"=>"Campus Adidas","descricao"=>"Estilo clássico e confortável","preco"=>399.90,"imagem"=>"img/addidas-campus.webp"],
     ["nome"=>"Vans Old Skool","descricao"=>"Estilo urbano, casual e confortável","preco"=>299.90,"imagem"=>"img/vans-placeholder.jpg"],
+    
 ];
 
 // Inicializa carrinho se não existir
@@ -38,16 +39,47 @@ if(isset($_GET['add'])){
 <body>
 <header>
   <img src="img/logo.jpg" alt="logo" width="100">
+
+  
+  <div class="search-container">
+    <form method="GET" action="index.php">
+      <input type="text" name="q" placeholder="Buscar tênis..." value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?>">
+      
+    </form>
+  </div>
+
+
   <nav>
     <a href="index.php">Início</a>
-    <a href="carrinho.php" class="carrinho-link">🛒 Carrinho (<?php echo array_sum($_SESSION['cart']); ?>)</a>
+    <a href="novidades.php">Novidades</a>
+    <a href="carrinho.php" class="carrinho-link" (<?php echo array_sum($_SESSION['cart']); ?>)>
+      <img src="./img/icon-cart.webp" alt="icon" width="40" class="img-icon">
+    </a>
   </nav>
 </header>
 
 <main>
-  <section class="banner">
-    <img src="img/banner.webp" alt="banner" class="banner-img">
-  </section>
+<section class="banner">
+  <img src="img/banner.webp" alt="banner" class="banner-img">
+
+  <div class="arrows">
+    <button class="button-seta">
+      <img src="img/seta.png" alt="seta esquerda">
+    </button>
+    <button class="button-seta">
+      <img src="img/seta.png" alt="seta direita">
+    </button>
+  </div>
+
+  <div class="indicators">
+    <ul>
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+</section>
+
 
   <h2 class="title">Nossos Tênis</h2>
   <div class="container">

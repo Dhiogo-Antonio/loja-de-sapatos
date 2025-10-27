@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function addToCart(name) {
-  alert(`🛒 ${name} adicionado ao carrinho!`);
+  alert(`${name} adicionado ao carrinho!`);
 }
 
 let cart = [];

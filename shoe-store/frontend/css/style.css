@@ -36,6 +36,74 @@ header nav a:hover {
 }
 
 
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.search-container form {
+  display: flex;
+  width: 100%;
+}
+
+.search-container input[type="text"] {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+}
+
+
+.search-container button:hover {
+  background: #ccc;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .search-container {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    max-width: 350px;
+  }
+
+  .search-container form {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .search-container input[type="text"],
+  .search-container button {
+    width: 100%;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    max-width: 90%;
+  }
+
+  .search-container input[type="text"] {
+    font-size: 14px;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .search-container button {
+    font-size: 16px;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+
+
 .banner {
   background: linear-gradient(135deg, #111, #333);
   color: white;
@@ -91,6 +159,117 @@ header nav a:hover {
   text-decoration: none;
   font-size: 18px;
   margin-left: 1rem;
+}
+
+.img-icon{
+  height: 40px;
+}
+
+
+.indicators ul {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -25px);
+  display: flex;
+  gap: 10px;
+}
+
+.indicators ul li {
+  width: 50px;
+  height: 5px;
+  background-color: green;
+  border-radius: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.indicators ul li.active {
+  background-color: blue;
+}
+
+/* ===== Setas ===== */
+.arrows {
+  width: 70vw;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -25px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.arrows .button-seta {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.arrows .button-seta:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+.arrows .button-seta img {
+  width: 40px;
+  margin-bottom: 20px;
+}
+
+
+.arrows .button-seta:first-child img {
+  transform: scaleX(-1);
+}
+
+
+@media (max-width: 1024px) {
+  .indicators ul li {
+    width: 40px;
+  }
+  .arrows {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .indicators ul li {
+    width: 30px;
+  }
+  .arrows {
+    width: 85vw;
+  }
+  .arrows .button-seta {
+    width: 40px;
+    height: 40px;
+  }
+  .arrows .button-seta img {
+    width: 30px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .indicators ul li {
+    width: 20px;
+    height: 4px;
+  }
+  .arrows {
+    width: 90vw;
+  }
+  .arrows .button-seta {
+    width: 35px;
+    height: 35px;
+  }
+  .arrows .button-seta img {
+    width: 25px;
+    margin-bottom: 10px;
+  }
 }
 
 
