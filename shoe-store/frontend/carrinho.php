@@ -5,7 +5,7 @@ session_start();
 $produtos = [
     ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/267436-800-800.webp"],
     ["nome"=>"Campus Adidas","descricao"=>"Estilo clássico e confortável","preco"=>399.90,"imagem"=>"img/addidas-campus.webp"],
-    ["nome"=>"Vans Old Skool","descricao"=>"Estilo urbano, casual e confortável","preco"=>299.90,"imagem"=>"img/vans-placeholder.jpg"],
+    ["nome"=>"Nike UltraRun","descricao"=>"Estilo urbano, casual e confortável","preco"=>99.90,"imagem"=>"img/adidas-UltraRun.avif"],
 ];
 
 // Inicializa carrinho se não existir
