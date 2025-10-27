@@ -1,0 +1,268 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+
+
+header {
+  background: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+header nav a {
+  color: #fff;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+.img-logo{
+    padding-bottom: 15px;
+}
+
+
+.banner {
+  background: linear-gradient(135deg, #111, #333);
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.banner h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.banner {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; 
+}
+
+.banner-img {
+  width: 100%;
+  height: auto; 
+  display: block;
+  object-fit: cover;
+  max-height: 400px;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+
+@media (max-width: 1024px) {
+  .banner-img {
+    max-height: 300px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .banner-img {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-img {
+    max-height: 150px;
+  }
+}
+
+.carrinho-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  margin-left: 1rem;
+}
+
+
+.title {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  width: 260px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.product-card h3 {
+  margin: 1rem 0 0.5rem;
+}
+
+.product-card p {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+button {
+  background: #111;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #444;
+}
+
+
+footer {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .product-card {
+    width: 90%;
+  }
+}
+
+/* Carrinho */
+.carrinho-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+
+.carrinho-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.carrinho-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.carrinho-table th,
+.carrinho-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.carrinho-table th {
+  background: #111;
+  color: #fff;
+  border-radius: 6px 6px 0 0;
+}
+
+.carrinho-table td img {
+  width: 80px;
+  border-radius: 8px;
+}
+
+.carrinho-table a {
+  color: #fff;
+  background: #111;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.carrinho-table a:hover {
+  background: #444;
+}
+
+.total-row td {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Botão voltar */
+.carrinho-voltar {
+  display: inline-block;
+  margin: 1rem 0;
+  color: #fff;
+  background: #111;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.carrinho-voltar:hover {
+  background: #444;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .carrinho-table th,
+  .carrinho-table td {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+
+  .carrinho-table td img {
+    width: 60px;
+  }
+
+  .carrinho-container {
+    padding: 1rem;
+  }
+}
+
