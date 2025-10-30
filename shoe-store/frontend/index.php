@@ -1,17 +1,22 @@
 <?php
 session_start();
 
+
+
+
+// Lista de produtos
 $produtos = [
     ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/nike-airmax.webp"],
     ["nome"=>"Campus Adidas","descricao"=>"Estilo clássico e confortável","preco"=>399.90,"imagem"=>"img/addidas-campus.webp"],
     ["nome"=>"Nike UltraRun","descricao"=>"Estilo urbano, casual e confortável","preco"=>99.90,"imagem"=>"img/adidas-UltraRun.avif"],
-    
 ];
+
 
 if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = [];
 }
 
+   
 
 if(isset($_GET['add'])){
     $id = (int)$_GET['add'];
@@ -21,10 +26,13 @@ if(isset($_GET['add'])){
         } else {
             $_SESSION['cart'][$id] = 1;
         }
+
+        $_SESSION['notif'] = "Produto adicionado ao carrinho!";
     }
     header("Location: index.php");
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -48,7 +56,6 @@ if(isset($_GET['add'])){
 
 
   <nav>
-    <a href="index.php">Início</a>
     <a href="novidades.php">Novidades</a>
     <a href="carrinho.php" class="carrinho-link" (<?php echo array_sum($_SESSION['cart']); ?>)>
       <img src="./img/icon-cart.webp" alt="icon" width="40" class="img-icon">
@@ -92,10 +99,11 @@ if(isset($_GET['add'])){
         <a href="index.php?add=<?php echo $key; ?>">
           <button>Adicionar ao Carrinho</button>
         </a>
+        
       </div>
     <?php endforeach; ?>
   </div>
-  <footer style="margin-top:2rem;">&copy; 2025 RD Modas</footer>
+  <footer style="margin-top:2rem;">&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
 </main>
 </body>
 </html>

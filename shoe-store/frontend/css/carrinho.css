@@ -1,0 +1,151 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+
+
+header {
+  background: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+header nav a {
+  color: #fff;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+
+.carrinho-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+
+.carrinho-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.carrinho-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.carrinho-table th,
+.carrinho-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.carrinho-table th {
+  background: #111;
+  color: #fff;
+  border-radius: 6px 6px 0 0;
+}
+
+.carrinho-table td img {
+  width: 80px;
+  border-radius: 8px;
+}
+
+.carrinho-table a {
+  color: #fff;
+  background: #111;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.carrinho-table a:hover {
+  background: #444;
+}
+
+
+
+.total-row td {
+  font-weight: bold;
+  font-size: 1.2rem;
+  
+}
+
+.link-carrinho-voltar{
+    display: inline-block;
+  margin: 1rem 0;
+  color: #fff;
+  background: #111;
+  padding:  1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.link-carrinho-voltar:hover{
+    background: #444;
+}
+
+.carrinho-compra{
+   
+  display: inline-block;
+  margin: 1rem 0;
+  color: #fff;
+  background: #111;
+  padding:  1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.carrinho-compra:hover {
+  background: #444;
+}
+
+
+
+@media (max-width: 768px) {
+  .carrinho-table th,
+  .carrinho-table td {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+
+  .carrinho-table td img {
+    width: 60px;
+  }
+
+  .carrinho-container {
+    padding: 1rem;
+  }
+}
+
+footer {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,0 +1,109 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&family=Mozilla+Text:wght@200..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: black;
+  margin: 0;
+  padding: 0;
+  
+}
+
+
+header {
+  background: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1{
+    color: #fff;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  color: #111;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.login-container button {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-container button:hover {
+  background: #333;
+}
+
+.login-container p {
+  margin-top: 1rem;
+}
+
+.login-container a {
+  color: #111;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-container a:hover {
+  text-decoration: underline;
+}
+
+.msg-erro {
+  background: #ffefef;
+  color: #c00;
+  border: 1px solid #f5c2c2;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+footer {
+  background: black;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,20 +1,20 @@
 <?php
 session_start();
 
-// Inicializa carrinho se não existir
+
 if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = [];
 }
 
-// Se veio via GET para adicionar produto
+
 if(isset($_GET['add'])){
     $id = (int)$_GET['add'];
     if(isset($_SESSION['cart'][$id])){
-        $_SESSION['cart'][$id] += 1; // aumenta quantidade
+        $_SESSION['cart'][$id] += 1; 
     } else {
-        $_SESSION['cart'][$id] = 1; // adiciona produto
+        $_SESSION['cart'][$id] = 1; 
     }
-    header("Location: index.php"); // redireciona para evitar refresh
+    header("Location: index.php"); 
     exit;
 }
 ?>
