@@ -3,13 +3,11 @@ session_start();
 
 
 
+include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
-// Lista de produtos
-$produtos = [
-    ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/nike-airmax.webp"],
-    ["nome"=>"Campus Adidas","descricao"=>"Estilo clássico e confortável","preco"=>399.90,"imagem"=>"img/addidas-campus.webp"],
-    ["nome"=>"Nike UltraRun","descricao"=>"Estilo urbano, casual e confortável","preco"=>99.90,"imagem"=>"img/adidas-UltraRun.avif"],
-];
+$stmt = $pdo->query("SELECT * FROM produtos");
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 
 if(!isset($_SESSION['cart'])){
@@ -33,6 +31,24 @@ if(isset($_GET['add'])){
     exit;
 }
 
+
+
+$q = isset($_GET['q']) ? trim($_GET['q']) : '';
+
+
+if ($q !== '') {
+    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE nome LIKE :q OR descricao LIKE :q");
+    $like = "%$q%";
+    $stmt->bindParam(':q', $like, PDO::PARAM_STR);
+    $stmt->execute();
+} else {
+    
+    $stmt = $pdo->query("SELECT * FROM produtos");
+}
+
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -55,12 +71,36 @@ if(isset($_GET['add'])){
   </div>
 
 
-  <nav>
-    <a href="novidades.php">Novidades</a>
-    <a href="carrinho.php" class="carrinho-link" (<?php echo array_sum($_SESSION['cart']); ?>)>
-      <img src="./img/icon-cart.webp" alt="icon" width="40" class="img-icon">
+
+ <nav class="navbar">
+
+   
+    <div class="menu" id="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+   
+    <ul class="nav-list" id="navList">
+      <li><a class="a" href="#">Início</a></li>
+      <li><a class="a" href="carrinho.php">Carrinho</a></li>
+      <li><a class="a" href="contato.php">Contato</a></li>
+      <li><a class="a" href="logout.php">Sair</a></li>
+    </ul>
+
+   
+    <a href="carrinho.php" class="carrinho-link">
+      <img src="./img/icon-cart.webp" alt="Carrinho" width="40" class="img-icon">
+      (<?php echo array_sum($_SESSION['cart']); ?>)
+    </a>
+
+    <a href="conta.php" class="conta-link">
+      <img src="./img/conta.png" alt="conta" width="80" class="img-icon">
+    </a>
     </a>
   </nav>
+
 </header>
 
 <main>
@@ -90,13 +130,14 @@ if(isset($_GET['add'])){
   <div class="container">
     <?php foreach($produtos as $key => $produto): ?>
       <div class="product-card">
-        <a href="produto.php?id=<?php echo $key; ?>">
+        <a href="produto.php?id=<?php echo $produto['id']; ?>">
           <img src="<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>" />
         </a>
         <h3><?php echo $produto['nome']; ?></h3>
         <p><?php echo $produto['descricao']; ?></p>
         <strong>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></strong><br>
-        <a href="index.php?add=<?php echo $key; ?>">
+        <a href="index.php?add=<?php echo $produto['id']; ?>">
+
           <button>Adicionar ao Carrinho</button>
         </a>
         
@@ -107,3 +148,64 @@ if(isset($_GET['add'])){
 </main>
 </body>
 </html>
+
+<script>
+  const menu = document.getElementById('menu');
+  const navList = document.getElementById('navList');
+
+  menu.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    navList.classList.toggle('open');
+    document.body.classList.toggle('menu-open');
+  });
+
+
+
+const bannerImg = document.querySelector('.banner-img');
+const arrows = document.querySelectorAll('.button-seta');
+const indicators = document.querySelectorAll('.indicators ul li');
+
+
+const banners = [
+  'img/banner.webp',
+  'img/banner2.webp',
+  'img/banner3.png'
+];
+
+let currentIndex = 0;
+
+function updateBanner() {
+  
+  bannerImg.style.opacity = 0;
+  setTimeout(() => {
+    bannerImg.src = banners[currentIndex];
+    bannerImg.style.opacity = 1;
+  }, 250);
+
+  
+  indicators.forEach((li, i) => {
+    li.classList.toggle('active', i === currentIndex);
+  });
+}
+
+
+arrows[0].addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + banners.length) % banners.length;
+  updateBanner();
+});
+
+arrows[1].addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % banners.length;
+  updateBanner();
+});
+
+
+indicators.forEach((li, i) => {
+  li.addEventListener('click', () => {
+    currentIndex = i;
+    updateBanner();
+  });
+});
+</script>
+
+

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('database.php'); // Conexão com o banco de dados
+include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php'); // Conexão com o banco de dados
 
 if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome']; // Pegando o nome do usuário

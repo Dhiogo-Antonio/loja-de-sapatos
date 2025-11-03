@@ -1,28 +1,37 @@
 <?php
 session_start();
-include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php'); // Conexão com o banco de dados
+include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    // Consultar o banco de dados para verificar as credenciais
+    $_SESSION['user_id'] = $user['id']; // já existente
+$_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], true) : [];
+
+    // Consulta o banco para verificar o usuário
     $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verificar se o usuário existe e se a senha está correta
     if ($usuario && $usuario['senha'] === $senha) {
-        // Senha correta, logar o usuário
-        $_SESSION['user'] = $usuario['nome']; // Guardando o nome do usuário na sessão
-        header("Location: carrinho.php"); // Redirecionar para o carrinho
+        // Login bem-sucedido — agora criamos as sessões corretamente
+        $_SESSION['user_id'] = $usuario['id'];
+        $_SESSION['user_nome'] = $usuario['nome'];
+        $_SESSION['user_email'] = $usuario['email'];
+        $_SESSION['user'] = $usuario['nome']; // opcional (mantém compatibilidade com outros scripts)
+
+        header("Location: conta.php"); // redireciona para a página de conta
         exit;
     } else {
-        // Senha incorreta ou usuário não encontrado
         $erro = "Usuário ou senha incorretos.";
     }
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>

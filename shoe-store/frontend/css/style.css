@@ -127,13 +127,14 @@ header nav a:hover {
 
 .banner-img {
   width: 100%;
-  height: auto; 
+  height: auto;
   display: block;
   object-fit: cover;
   max-height: 400px;
-  transition: all 0.3s ease;
   border-radius: 12px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
 
 @media (max-width: 1024px) {
   .banner-img {
@@ -173,38 +174,46 @@ header nav a:hover {
 .indicators ul li {
   width: 50px;
   height: 5px;
-  background-color: green;
+  background-color: gray;
   border-radius: 5px;
   transition: 0.5s;
   cursor: pointer;
+  list-style: none;
 }
 
 .indicators ul li.active {
-  background-color: blue;
+  background-color: black;
 }
 
-
 .arrows {
-  width: 70vw;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -25px);
+  position: absolute; /* Posiciona sobre o banner */
+  top: 50%;           /* Centraliza verticalmente */
+  left: 0;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-around;
+  gap: 80%;
+  transform: translateY(-50%);
+  z-index: 10;        /* Garante que fique acima da imagem */
   
 }
 
+
+
 .arrows .button-seta {
-  width: 50px;
-  height: 50px;
+  width: 40px;       /* Ajuste o tamanho conforme necessário */
+  height: 40px;
   border-radius: 50%;
+  margin-bottom: 12%;
   border: none;
   background-color: white;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  display: flex;            /* Flexbox para centralizar */
+  justify-content: center;  /* Centraliza horizontalmente */
+  align-items: center;      /* Centraliza verticalmente */
+  padding: 0;               /* Remove padding extra */
 }
 
 .arrows .button-seta:hover {
@@ -212,9 +221,10 @@ header nav a:hover {
   transform: scale(1.05);
 }
 
-.arrows .button-seta img {
-  width: 40px;
-  margin-bottom: 20px;
+.arrows button img {
+  position: static; 
+  width: 50px;      
+  height: auto;
 }
 
 
@@ -223,47 +233,35 @@ header nav a:hover {
 }
 
 
+
 @media (max-width: 1024px) {
   .indicators ul li {
     width: 40px;
   }
-  .arrows {
-    width: 80vw;
+
+  .indicators{
+    position: absolute;
+    bottom: 50%;
+  }
+
+  .arrows .button-seta{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; 
+  margin-bottom: 20%;      
   }
 }
 
 @media (max-width: 768px) {
-  .indicators ul li {
-    width: 30px;
+  .banner .arrows
+  {
+    display: none;
   }
-  .arrows {
-    width: 85vw;
-  }
-  .arrows .button-seta {
-    width: 40px;
-    height: 40px;
-  }
-  .arrows .button-seta img {
-    width: 30px;
-    margin-bottom: 15px;
-  }
-}
 
-@media (max-width: 480px) {
-  .indicators ul li {
-    width: 20px;
-    height: 4px;
-  }
-  .arrows {
-    width: 90vw;
-  }
-  .arrows .button-seta {
-    width: 35px;
-    height: 35px;
-  }
-  .arrows .button-seta img {
-    width: 25px;
-    margin-bottom: 10px;
+  .indicators {
+    position: absolute;
+    bottom: 5%;
   }
 }
 
@@ -300,6 +298,7 @@ header nav a:hover {
   height: 220px;
   object-fit: cover;
   border-radius: 12px 12px 0 0;
+  
 }
 
 .product-card h3 {
@@ -349,6 +348,139 @@ footer {
   }
 }
 
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: opacity 0.3s;
+}
+
+.nav-list li a:hover {
+  opacity: 0.7;
+}
+
+
+.carrinho-link {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  margin-left: 1rem;
+}
+
+
+
+
+.menu {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1001;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #000;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.menu span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+
+@media (max-width: 768px) {
+ 
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 40%;
+    transition: right 0.4s ease-in-out;
+    z-index: 1000;
+  }
+
+ 
+  .nav-list.open {
+    right: 0;
+  }
+
+  .nav-list li {
+    margin: 1.5rem 0;
+  }
+
+ 
+  .menu {
+    display: flex;
+  }
+
+ 
+  .menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+ 
+  body.menu-open::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 999;
+  }
+}
+
+
+@media (min-width: 769px) {
+  .nav-list li {
+    display: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .carrinho-link {
+    display: none;
+  }
+}
 
 
 

@@ -1,22 +1,28 @@
 <?php
 session_start();
 
-// Verificar se o usuário está logado
+// Conexão com o banco
+include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
+
+// Redireciona se não estiver logado
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php"); // Redirecionar para a página de login
+    header("Location: login.php"); 
     exit;
 }
 
-$produtos = [
-    ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/nike-airmax.webp"],
-    ["nome"=>"Campus Adidas","descricao"=>"Estilo clássico e confortável","preco"=>399.90,"imagem"=>"img/addidas-campus.webp"],
-    ["nome"=>"Nike UltraRun","descricao"=>"Estilo urbano, casual e confortável","preco"=>99.90,"imagem"=>"img/adidas-UltraRun.avif"],
-];
+if(isset($_SESSION['user_id'])){
+    $cartJson = json_encode($_SESSION['cart']);
+    $stmt = $pdo->prepare("UPDATE usuarios SET carrinho = :carrinho WHERE id = :id");
+    $stmt->execute([':carrinho' => $cartJson, ':id' => $_SESSION['user_id']]);
+}
 
+
+// Inicializa o carrinho
 if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = [];
 }
 
+// Remover produto do carrinho
 if(isset($_GET['remove'])){
     $id = (int)$_GET['remove'];
     unset($_SESSION['cart'][$id]);
@@ -25,6 +31,22 @@ if(isset($_GET['remove'])){
 }
 
 $total = 0;
+$produtos = [];
+
+// Carregar produtos do carrinho do banco
+if(!empty($_SESSION['cart'])){
+    $ids = array_keys($_SESSION['cart']);
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+
+    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id IN ($placeholders)");
+    $stmt->execute($ids);
+    $produtosDB = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Reindexa pelo ID para facilitar acesso
+    foreach($produtosDB as $p){
+        $produtos[$p['id']] = $p;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -64,13 +86,14 @@ $total = 0;
       </tr>
 
       <?php foreach($_SESSION['cart'] as $id => $qtd): 
+        if(!isset($produtos[$id])) continue; // Pula se o produto não existir no DB
         $produto = $produtos[$id];
         $subtotal = $produto['preco'] * $qtd;
         $total += $subtotal;
       ?>
       <tr>
-        <td><strong><?php echo $produto['nome']; ?></strong></td>
-        <td><img src="<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>"></td>
+        <td><strong><?php echo htmlspecialchars($produto['nome']); ?></strong></td>
+        <td><img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" width="80"></td>
         <td>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></td>
         <td><?php echo $qtd; ?></td>
         <td>R$ <?php echo number_format($subtotal,2,',','.'); ?></td>

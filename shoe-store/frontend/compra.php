@@ -1,45 +1,48 @@
 <?php
 session_start();
+include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
-// Verificar se o usuário está logado
+// Verifica se usuário está logado
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php"); // Redirecionar para a página de login
+    header("Location: login.php");
     exit;
 }
 
-// Lógica de compra aqui (por exemplo, processar pagamento)
+// Verifica se há produtos no carrinho
+if (empty($_SESSION['cart'])) {
+    $_SESSION['notif'] = "Seu carrinho está vazio!";
+    header("Location: index.php");
+    exit;
+}
 
+// Processa cada produto no carrinho
+foreach($_SESSION['cart'] as $id => $quantidade){
+    // Verifica se há estoque suficiente
+    $stmt = $pdo->prepare("SELECT estoque FROM produtos WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $produtosDB = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($produtosDB['estoque'] < $quantidade){
+        $_SESSION['notif'] = "Estoque insuficiente para algum produto!";
+        header("Location: carrinho.php");
+        exit;
+    }
+
+    // Atualiza o estoque
+    $stmt = $pdo->prepare("UPDATE produtos SET estoque = estoque - :quantidade WHERE id = :id");
+    $stmt->bindParam(':quantidade', $quantidade, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+// Limpa o carrinho após a compra
+unset($_SESSION['cart']);  
+
+// Mensagem de sucesso
+$_SESSION['notif'] = "Compra realizada com sucesso!";
+
+// Redireciona para a página inicial
+header("Location: index.php");
+exit;
 ?>
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finalizar Compra</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-<header>
-  <img src="img/logo.jpg" alt="logo" width="100">
-  <nav>
-    <a href="index.php">Início</a>
-  </nav>
-</header>
-
-<main class="compra-container">
-  <h2>Finalizar Compra</h2>
-
-  <p>Obrigado por comprar conosco, <?php echo $_SESSION['user']; ?>! Seu pedido está sendo processado.</p>
-
-  <div style="text-align:center; margin-top:2rem;">
-    <a href="index.php" class="link-carrinho-voltar">Voltar para a página inicial</a>
-  </div>
-
-</main>
-
-<footer style="margin-top:2rem;">&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
-
-</body>
-</html>

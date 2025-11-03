@@ -1,36 +1,43 @@
 <?php
 session_start();
+include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
-
+// Inicializa o carrinho
 if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = [];
 }
 
-
+// Adicionar ao carrinho
 if(isset($_GET['add'])){
     $id = (int)$_GET['add'];
-    if(isset($_SESSION['cart'][$id])){
-        $_SESSION['cart'][$id] += 1; 
-    } else {
-        $_SESSION['cart'][$id] = 1; 
+
+    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(!$produto){
+        echo "<p>Produto não encontrado!</p>";
+        exit;
     }
-    header("Location: index.php"); 
+
+    if(isset($_SESSION['cart'][$id])){
+        $_SESSION['cart'][$id] += 1;
+    } else {
+        $_SESSION['cart'][$id] = 1;
+    }
+
+    header("Location: produto.php?id=$id");
     exit;
 }
-?>
 
-
-
-
-<?php
-$produtos = [
-    ["nome"=>"Nike Air Max Tn","descricao"=>"Conforto, amortecimento, estilo moderno","preco"=>749.90,"imagem"=>"img/nike-airmax.webp"],
-    ["nome"=>"Campus Adidas","descricao"=>"Estilo clássico e confortável","preco"=>399.90,"imagem"=>"img/addidas-campus.webp"],
-    ["nome"=>"Nike UltraRun","descricao"=>"Estilo urbano, casual e confortável","preco"=>99.90,"imagem"=>"img/adidas-UltraRun.avif"],
-];
-
+// Pega o ID do produto a ser exibido
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$produto = $produtos[$id] ?? null;
+
+$stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = :id");
+$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+$stmt->execute();
+$produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(!$produto){
     echo "<p>Produto não encontrado!</p>";
@@ -43,22 +50,27 @@ if(!$produto){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?php echo $produto['nome']; ?></title>
+<title><?php echo htmlspecialchars($produto['nome']); ?></title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 <header>
   <a href="index.php">← Voltar</a>
+  <a href="carrinho.php">Carrinho (<?php echo array_sum($_SESSION['cart']); ?>)</a>
 </header>
 
-<main style="text-align:center; padding:2rem;">
-  <img src="<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>" style="width:300px; border-radius:12px;">
-  <h2><?php echo $produto['nome']; ?></h2>
-  <p><?php echo $produto['descricao']; ?></p>
-  <strong>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></strong><br><br>
-  <button onclick="addToCart(<?php echo $id; ?>)">Adicionar ao Carrinho</button>
+<main style="display:flex; justify-content:center; padding:2rem;">
+  <div class="produto-card" style="border:1px solid #ccc; padding:2rem; width:300px; text-align:center; border-radius:12px;">
+    <img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" style="width:100%; height:250px; object-fit:cover; border-radius:12px;">
+    <h2><?php echo htmlspecialchars($produto['nome']); ?></h2>
+    <p><?php echo htmlspecialchars($produto['descricao']); ?></p>
+    <strong>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></strong><br><br>
+    <a href="?add=<?php echo $produto['id']; ?>"><button>Adicionar ao Carrinho</button></a>
+  </div>
 </main>
 
-<script src="js/main.js"></script>
+<footer style="text-align:center; margin-top:2rem;">&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
+
 </body>
 </html>

@@ -11,3 +11,4 @@ window.onload = function() {
     }, 3000); // 3000ms = 3 segundos
   }
 };
+
