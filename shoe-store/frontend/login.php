@@ -6,23 +6,23 @@ if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $_SESSION['user_id'] = $user['id']; // já existente
+    $_SESSION['user_id'] = $user['id']; 
 $_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], true) : [];
 
-    // Consulta o banco para verificar o usuário
+    
     $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($usuario && $usuario['senha'] === $senha) {
-        // Login bem-sucedido — agora criamos as sessões corretamente
+        
         $_SESSION['user_id'] = $usuario['id'];
         $_SESSION['user_nome'] = $usuario['nome'];
         $_SESSION['user_email'] = $usuario['email'];
-        $_SESSION['user'] = $usuario['nome']; // opcional (mantém compatibilidade com outros scripts)
+        $_SESSION['user'] = $usuario['nome'];
 
-        header("Location: conta.php"); // redireciona para a página de conta
+        header("Location: conta.php"); 
         exit;
     } else {
         $erro = "Usuário ou senha incorretos.";
@@ -40,7 +40,7 @@ $_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <header>
@@ -55,9 +55,11 @@ $_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], t
         <?php endif; ?>
 
         <form method="POST">
-            <input type="text" name="email" placeholder="Usuário" required>
-            <input type="password" name="senha" placeholder="Senha" required>
+            <input type="text" name="email" placeholder="Usuário" required class="input">
+            <input type="password" name="senha" placeholder="Senha" required class="input">
             <button type="submit" name="login">Entrar</button>
+
+            <a href="#">Esqueci a senha</a><br>
         </form>
 
         <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>

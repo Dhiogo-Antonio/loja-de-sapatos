@@ -43,6 +43,6 @@ unset($_SESSION['cart']);
 $_SESSION['notif'] = "Compra realizada com sucesso!";
 
 // Redireciona para a página inicial
-header("Location: index.php");
+header("Location: finalizar-compra.php");
 exit;
 ?>

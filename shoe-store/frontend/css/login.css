@@ -1,6 +1,4 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&family=Mozilla+Text:wght@200..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -20,6 +18,13 @@ header {
   align-items: center;
 }
 
+
+header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 h1{
     color: #fff;
 }
@@ -35,7 +40,7 @@ h1{
 }
 
 .login-container h2 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: #111;
 }
 
@@ -50,7 +55,6 @@ h1{
   padding: 0.8rem 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 16px;
 }
 
 .login-container button {
@@ -80,6 +84,12 @@ h1{
 
 .login-container a:hover {
   text-decoration: underline;
+}
+
+.input{
+  padding: 13px;
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 
 .msg-erro {

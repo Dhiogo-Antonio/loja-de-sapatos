@@ -49,6 +49,31 @@ if ($q !== '') {
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
+
+$categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+
+if ($categoria !== '') {
+    if ($categoria == 'tenis-chinelos') {
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria IN ('Tênis', 'Chinelos')");
+    } elseif ($categoria == 'roupas-masculinas') {
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Masculina'");
+    } elseif ($categoria == 'roupas-femininas') {
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Feminina'");
+    }
+    $stmt->execute();
+} elseif ($q !== '') {
+    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE nome LIKE :q OR descricao LIKE :q");
+    $like = "%$q%";
+    $stmt->bindParam(':q', $like, PDO::PARAM_STR);
+    $stmt->execute();
+} else {
+    $stmt = $pdo->query("SELECT * FROM produtos");
+}
+
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -60,7 +85,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <header>
-  <img src="img/logo.jpg" alt="logo" width="100">
+  <img src="img/logo.jpg" alt="logo" width="100" class="img-logo">
 
   
   <div class="search-container">
@@ -104,37 +129,24 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 
 <main>
-<section class="banner">
-  <img src="img/banner.webp" alt="banner" class="banner-img">
 
-  <div class="arrows">
-    <button class="button-seta">
-      <img src="img/seta.png" alt="seta esquerda">
-    </button>
-    <button class="button-seta">
-      <img src="img/seta.png" alt="seta direita">
-    </button>
-  </div>
-
-  <div class="indicators">
-    <ul>
-      <li class="active"></li>
-      <li></li>
-      <li></li>
-    </ul>
-  </div>
-</section>
+<ul>
+  <li><a href="index.php?categoria=tenis-chinelos" class="<?php echo ($categoria == 'tenis-chinelos') ? 'active' : ''; ?>">Tênis/Chinelos</a></li>
+  <li><a href="index.php?categoria=roupas-masculinas" class="<?php echo ($categoria == 'roupas-masculinas') ? 'active' : ''; ?>">Roupas Masculinas</a></li>
+  <li><a href="index.php?categoria=roupas-femininas" class="<?php echo ($categoria == 'roupas-femininas') ? 'active' : ''; ?>">Roupas Femininas</a></li>
+</ul>
 
 
   <h2 class="title">Nossos Tênis</h2>
+
+
   <div class="container">
     <?php foreach($produtos as $key => $produto): ?>
       <div class="product-card">
         <a href="produto.php?id=<?php echo $produto['id']; ?>">
           <img src="<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>" />
         </a>
-        <h3><?php echo $produto['nome']; ?></h3>
-        <p><?php echo $produto['descricao']; ?></p>
+        <h3><?php echo $produto['nome']; ?></h3><br><br>
         <strong>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></strong><br>
         <a href="index.php?add=<?php echo $produto['id']; ?>">
 
@@ -159,53 +171,21 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     document.body.classList.toggle('menu-open');
   });
 
-
-
-const bannerImg = document.querySelector('.banner-img');
-const arrows = document.querySelectorAll('.button-seta');
-const indicators = document.querySelectorAll('.indicators ul li');
-
-
-const banners = [
-  'img/banner.webp',
-  'img/banner2.webp',
-  'img/banner3.png'
-];
-
-let currentIndex = 0;
-
-function updateBanner() {
   
-  bannerImg.style.opacity = 0;
-  setTimeout(() => {
-    bannerImg.src = banners[currentIndex];
-    bannerImg.style.opacity = 1;
-  }, 250);
+  const cards = document.querySelectorAll('.product-card');
 
-  
-  indicators.forEach((li, i) => {
-    li.classList.toggle('active', i === currentIndex);
-  });
-}
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.1}s`;
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
 
-
-arrows[0].addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + banners.length) % banners.length;
-  updateBanner();
-});
-
-arrows[1].addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % banners.length;
-  updateBanner();
-});
+  cards.forEach(card => observer.observe(card));
 
 
-indicators.forEach((li, i) => {
-  li.addEventListener('click', () => {
-    currentIndex = i;
-    updateBanner();
-  });
-});
 </script>
 
 

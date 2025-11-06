@@ -2,14 +2,13 @@
 session_start();
 include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
-// Inicializa o carrinho
 if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = [];
 }
 
-// Adicionar ao carrinho
 if(isset($_GET['add'])){
     $id = (int)$_GET['add'];
+    $quantity = isset($_GET['qty']) ? (int)$_GET['qty'] : 1;
 
     $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = :id");
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -22,18 +21,16 @@ if(isset($_GET['add'])){
     }
 
     if(isset($_SESSION['cart'][$id])){
-        $_SESSION['cart'][$id] += 1;
+        $_SESSION['cart'][$id] += $quantity;
     } else {
-        $_SESSION['cart'][$id] = 1;
+        $_SESSION['cart'][$id] = $quantity;
     }
 
     header("Location: produto.php?id=$id");
     exit;
 }
 
-// Pega o ID do produto a ser exibido
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-
 $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = :id");
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
@@ -43,6 +40,11 @@ if(!$produto){
     echo "<p>Produto não encontrado!</p>";
     exit;
 }
+
+// Galeria de imagens (exemplo: imagem principal + extras)
+$imagens = [$produto['imagem']];
+if(!empty($produto['imagem2'])) $imagens[] = $produto['imagem2'];
+if(!empty($produto['imagem3'])) $imagens[] = $produto['imagem3'];
 ?>
 
 <!DOCTYPE html>
@@ -51,26 +53,104 @@ if(!$produto){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo htmlspecialchars($produto['nome']); ?></title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/produto.css">
+<style>
+
+</style>
 </head>
 <body>
 
 <header>
-  <a href="index.php">← Voltar</a>
-  <a href="carrinho.php">Carrinho (<?php echo array_sum($_SESSION['cart']); ?>)</a>
+  <img src="img/logo.jpg" alt="logo" width="100">
 </header>
 
-<main style="display:flex; justify-content:center; padding:2rem;">
-  <div class="produto-card" style="border:1px solid #ccc; padding:2rem; width:300px; text-align:center; border-radius:12px;">
-    <img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" style="width:100%; height:250px; object-fit:cover; border-radius:12px;">
+<nav class="navbar">
+
+   
+    <div class="menu" id="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+   
+    <ul class="nav-list" id="navList">
+      <li><a class="a" href="index.php">Início</a></li>
+      <li><a class="a" href="carrinho.php">Carrinho</a></li>
+      <li><a class="a" href="contato.php">Contato</a></li>
+      <li><a class="a" href="logout.php">Sair</a></li>
+    </ul>
+
+  
+  </nav>
+
+<main>
+  <div class="gallery">
+    <img id="mainImage" src="<?php echo htmlspecialchars($imagens[0]); ?>" class="gallery-main">
+    <div class="gallery-thumbs">
+      <?php foreach($imagens as $index => $img): ?>
+        <img src="<?php echo htmlspecialchars($img); ?>" class="<?php echo $index===0?'active':''; ?>" onclick="changeImage(this)">
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+  <div class="product-info">
     <h2><?php echo htmlspecialchars($produto['nome']); ?></h2>
     <p><?php echo htmlspecialchars($produto['descricao']); ?></p>
-    <strong>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></strong><br><br>
-    <a href="?add=<?php echo $produto['id']; ?>"><button>Adicionar ao Carrinho</button></a>
+    <strong>R$ <?php echo number_format($produto['preco'],2,',','.'); ?></strong>
+
+    <form method="get">
+  <input type="hidden" name="add" value="<?php echo $produto['id']; ?>">
+
+  <div class="size-container">
+    <label for="size">Tamanho:</label>
+    <select name="size" id="size" required>
+      <?php for($t=34; $t<=44; $t++): ?>
+        <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
+      <?php endfor; ?>
+    </select>
+  </div>
+
+  <div class="quantity-container">
+    <label for="qty">Quantidade:</label>
+    <input type="number" name="qty" value="1" min="1">
+  </div>
+
+  <button type="submit" class="add-cart">Adicionar ao Carrinho</button>
+</form>
+
+    <div class="specs">
+      <h3>Especificações:</h3>
+      <ul>
+        <li>Material: Couro sintético</li>
+        <li>Sola: Borracha antiderrapante</li>
+        <li>Disponível nos tamanhos 34 a 44</li>
+      </ul>
+    </div>
+
+    
   </div>
 </main>
 
-<footer style="text-align:center; margin-top:2rem;">&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
+<footer>&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
+
+<script>
+function changeImage(img){
+  document.getElementById('mainImage').src = img.src;
+  document.querySelectorAll('.gallery-thumbs img').forEach(el => el.classList.remove('active'));
+  img.classList.add('active');
+}
+
+  const menu = document.getElementById('menu');
+  const navList = document.getElementById('navList');
+
+  menu.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    navList.classList.toggle('open');
+    document.body.classList.toggle('menu-open');
+  });
+
+</script>
 
 </body>
 </html>
