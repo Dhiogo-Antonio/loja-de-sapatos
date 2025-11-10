@@ -22,7 +22,7 @@ $_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], t
         $_SESSION['user_email'] = $usuario['email'];
         $_SESSION['user'] = $usuario['nome'];
 
-        header("Location: conta.php"); 
+        header("Location: index.php"); 
         exit;
     } else {
         $erro = "Usuário ou senha incorretos.";
@@ -55,7 +55,7 @@ $_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], t
         <?php endif; ?>
 
         <form method="POST">
-            <input type="text" name="email" placeholder="Usuário" required class="input">
+            <input type="text" name="email" placeholder="Email" required class="input">
             <input type="password" name="senha" placeholder="Senha" required class="input">
             <button type="submit" name="login">Entrar</button>
 

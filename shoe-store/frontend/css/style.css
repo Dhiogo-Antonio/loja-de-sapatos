@@ -62,7 +62,7 @@ main ul li a:hover{
   opacity: 0.7;
 }
 
-/* 🔹 Links das categorias (Tênis, Roupas etc.) */
+
 main ul li a {
   text-decoration: none;
   color: black;
@@ -72,7 +72,7 @@ main ul li a {
   transition: color 0.3s ease;
 }
 
-/* Linha invisível inicial */
+
 main ul li a::after {
   content: "";
   position: absolute;
@@ -84,24 +84,24 @@ main ul li a::after {
   transition: width 0.3s ease;
 }
 
-/* Hover — anima a linha */
+
 main ul li a:hover::after {
   width: 100%;
 }
 
-/* Estado ativo — mantém a linha */
+
 main ul li a.active::after {
   width: 100%;
 }
 
-/* (Opcional) cor do texto no hover e ativo */
+
 main ul li a:hover,
 main ul li a.active {
   color: #333;
 }
 
 
-/* ✨ Animação para os cards surgirem um por um */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -113,14 +113,14 @@ main ul li a.active {
   }
 }
 
-/* Aplica a animação base em todos os cards */
+
 .product-card {
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUp 0.6s ease forwards;
 }
 
-/* Delay crescente para cada card */
+
 .product-card:nth-child(1) { animation-delay: 0.1s; }
 .product-card:nth-child(2) { animation-delay: 0.2s; }
 .product-card:nth-child(3) { animation-delay: 0.3s; }
@@ -131,7 +131,7 @@ main ul li a.active {
 .product-card:nth-child(8) { animation-delay: 0.8s; }
 .product-card:nth-child(9) { animation-delay: 0.9s; }
 .product-card:nth-child(10) { animation-delay: 1.0s; }
-/* Você pode continuar, ou deixar que os seguintes usem o mesmo tempo final */
+
 
 
 
@@ -228,7 +228,7 @@ main ul li a.active {
   padding: 2rem;
 }
 
-/* 🔹 Hover nos product cards */
+
 .product-card {
   background: white;
   border-radius: 12px;
@@ -437,7 +437,7 @@ footer {
   }
 }
 
-/* Esconde o ícone da conta apenas em celulares */
+
 @media (max-width: 768px) {
   .conta-link {
     display: none ;
@@ -459,7 +459,7 @@ footer {
   }
 }
 
-/* 🔹 Layout responsivo dos cards — lado a lado e menores */
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -467,7 +467,7 @@ footer {
   gap: 1.5rem;
 }
 
-/* ---- Telas médias (tablets) ---- */
+
 @media (max-width: 768px) {
   .container {
     display: flex;
@@ -477,7 +477,7 @@ footer {
   }
 
   .product-card {
-    width: 180px; /* menor para caber mais */
+    width: 180px; 
     padding: 0.5rem;
   }
 

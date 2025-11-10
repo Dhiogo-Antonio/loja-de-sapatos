@@ -26,7 +26,7 @@ if(isset($_GET['add'])){
         $_SESSION['cart'][$id] = $quantity;
     }
 
-    header("Location: produto.php?id=$id");
+    header("Location: index.php");
     exit;
 }
 
@@ -45,6 +45,11 @@ if(!$produto){
 $imagens = [$produto['imagem']];
 if(!empty($produto['imagem2'])) $imagens[] = $produto['imagem2'];
 if(!empty($produto['imagem3'])) $imagens[] = $produto['imagem3'];
+
+$categoria = $produto['categoria'];
+$stmtSug = $pdo->prepare("SELECT * FROM produtos WHERE categoria = :cat AND id != :id ORDER BY RAND() LIMIT 9");
+$stmtSug->execute([':cat' => $categoria, ':id' => $id]);
+$sugestoes = $stmtSug->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -126,12 +131,33 @@ if(!empty($produto['imagem3'])) $imagens[] = $produto['imagem3'];
         <li>Sola: Borracha antiderrapante</li>
         <li>Disponível nos tamanhos 34 a 44</li>
       </ul>
+
+     
     </div>
-
-    
+ 
+    <a href="index.php" class="btn-voltar">←</a>
   </div>
-</main>
 
+
+
+  
+</main>
+  
+  <?php if($sugestoes): ?>
+  <div class="sugestoes">
+    <h3>Você também pode gostar</h3>
+    <div class="sugestoes-container">
+      <?php foreach($sugestoes as $s): ?>
+        <div class="sugestoes-item">
+          <img src="<?php echo htmlspecialchars($s['imagem']); ?>" alt="<?php echo htmlspecialchars($s['nome']); ?>">
+          <h4><?php echo htmlspecialchars($s['nome']); ?></h4>
+          <strong>R$ <?php echo number_format($s['preco'],2,',','.'); ?></strong>
+          <a href="produto.php?id=<?php echo $s['id']; ?>">Ver Produto</a>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div><br><br>
+  <?php endif; ?>
 <footer>&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
 
 <script>

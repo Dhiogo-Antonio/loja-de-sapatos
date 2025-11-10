@@ -60,9 +60,6 @@ if(!empty($_SESSION['cart'])){
 
 <header>
   <img src="img/logo.jpg" alt="logo" width="100">
-  <nav>
-    <a href="index.php">Início</a>
-  </nav>
 </header>
 
 <main class="carrinho-container">
@@ -107,7 +104,8 @@ if(!empty($_SESSION['cart'])){
       </tr>
     </table>
 
-    <div style="text-align:center; margin-top:2rem;">
+    <div class="buttons">
+      <a href="index.php" class="carrinho-voltar">Voltar</a>
       <a href="compra.php" class="carrinho-compra">Realizar compra</a>
     </div>
 

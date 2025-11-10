@@ -56,9 +56,11 @@ if ($categoria !== '') {
     if ($categoria == 'tenis-chinelos') {
         $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria IN ('Tênis', 'Chinelos')");
     } elseif ($categoria == 'roupas-masculinas') {
-        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Masculina'");
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Roupas Masculinas'");
     } elseif ($categoria == 'roupas-femininas') {
-        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Feminina'");
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Roupas Femininas'");
+    } elseif ($categoria == 'bolsas') {
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Bolsas'");
     }
     $stmt->execute();
 } elseif ($q !== '') {
@@ -71,6 +73,7 @@ if ($categoria !== '') {
 }
 
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 
 
@@ -134,10 +137,11 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <li><a href="index.php?categoria=tenis-chinelos" class="<?php echo ($categoria == 'tenis-chinelos') ? 'active' : ''; ?>">Tênis/Chinelos</a></li>
   <li><a href="index.php?categoria=roupas-masculinas" class="<?php echo ($categoria == 'roupas-masculinas') ? 'active' : ''; ?>">Roupas Masculinas</a></li>
   <li><a href="index.php?categoria=roupas-femininas" class="<?php echo ($categoria == 'roupas-femininas') ? 'active' : ''; ?>">Roupas Femininas</a></li>
-</ul>
+  <li><a href="index.php?categoria=bolsas" class="<?php echo ($categoria == 'bolsas') ? 'active' : ''; ?>">Bolsas</a></li>
+</ul><br>
 
 
-  <h2 class="title">Nossos Tênis</h2>
+ <hr>
 
 
   <div class="container">
@@ -156,8 +160,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     <?php endforeach; ?>
   </div>
-  <footer style="margin-top:2rem;">&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
+  
 </main>
+<footer style="margin-top:2rem;">&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
 </body>
 </html>
 
