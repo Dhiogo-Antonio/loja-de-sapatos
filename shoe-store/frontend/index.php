@@ -61,6 +61,8 @@ if ($categoria !== '') {
         $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Roupas Femininas'");
     } elseif ($categoria == 'bolsas') {
         $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Bolsas'");
+    }  elseif ($categoria == 'unissex') {
+        $stmt = $pdo->prepare("SELECT * FROM produtos WHERE categoria = 'Unissex'");
     }
     $stmt->execute();
 } elseif ($q !== '') {
@@ -111,9 +113,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
    
     <ul class="nav-list" id="navList">
-      <li><a class="a" href="#">Início</a></li>
+      <li><a class="a" href="index.php">Início</a></li>
       <li><a class="a" href="carrinho.php">Carrinho</a></li>
-      <li><a class="a" href="contato.php">Contato</a></li>
+      <li><a class="a" href="conta.php">Conta</a></li>
       <li><a class="a" href="logout.php">Sair</a></li>
     </ul>
 
@@ -138,6 +140,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <li><a href="index.php?categoria=roupas-masculinas" class="<?php echo ($categoria == 'roupas-masculinas') ? 'active' : ''; ?>">Roupas Masculinas</a></li>
   <li><a href="index.php?categoria=roupas-femininas" class="<?php echo ($categoria == 'roupas-femininas') ? 'active' : ''; ?>">Roupas Femininas</a></li>
   <li><a href="index.php?categoria=bolsas" class="<?php echo ($categoria == 'bolsas') ? 'active' : ''; ?>">Bolsas</a></li>
+  <li><a href="index.php?categoria=unissex" class="<?php echo ($categoria == 'unissex') ? 'active' : ''; ?>">Roupas Unissex</a></li>
 </ul><br>
 
 

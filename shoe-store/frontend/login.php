@@ -3,32 +3,33 @@ session_start();
 include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
 if (isset($_POST['login'])) {
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
     $senha = $_POST['senha'];
 
-    $_SESSION['user_id'] = $user['id']; 
-$_SESSION['cart'] = !empty($user['carrinho']) ? json_decode($user['carrinho'], true) : [];
-
-    
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
+    // Busca o usuário no banco
+    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = :email LIMIT 1");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($usuario && $usuario['senha'] === $senha) {
-        
-        $_SESSION['user_id'] = $usuario['id'];
-        $_SESSION['user_nome'] = $usuario['nome'];
-        $_SESSION['user_email'] = $usuario['email'];
-        $_SESSION['user'] = $usuario['nome'];
+    // Verifica se o usuário existe e a senha confere
+   if ($usuario && $usuario['senha'] === $senha) {
+    $_SESSION['user_id'] = $usuario['id'];
+    $_SESSION['user_nome'] = $usuario['nome'];
+    $_SESSION['user_email'] = $usuario['email'];
+    $_SESSION['user_tipo'] = $usuario['tipo']; // <-- ESSENCIAL
+    $_SESSION['user'] = $usuario['nome'];
 
-        header("Location: index.php"); 
-        exit;
+    // Redireciona conforme o tipo
+    if ($usuario['tipo'] === 'admin') {
+        header("Location: ../admin/index.php");
     } else {
-        $erro = "Usuário ou senha incorretos.";
+        header("Location: index.php");
     }
+    exit;
 }
 
+}
 
 
 

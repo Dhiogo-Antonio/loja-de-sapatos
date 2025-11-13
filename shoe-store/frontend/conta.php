@@ -28,12 +28,12 @@ if (isset($_POST['upload'])) {
             $stmt = $pdo->prepare("UPDATE usuarios SET foto = :foto WHERE id = :id");
             $stmt->execute([':foto' => $caminho, ':id' => $userId]);
 
-            $_SESSION['mensagem'] = "Foto atualizada com sucesso!";
+            
         } else {
-            $_SESSION['mensagem'] = "Formato de imagem inválido. Use JPG, PNG ou WEBP.";
+            $_SESSION['mensagem'] = "⚠️ Formato inválido. Use JPG, PNG ou WEBP.";
         }
     } else {
-        $_SESSION['mensagem'] = "Erro ao enviar o arquivo.";
+        $_SESSION['mensagem'] = "❌ Erro ao enviar o arquivo.";
     }
 
     header("Location: conta.php");
@@ -41,7 +41,7 @@ if (isset($_POST['upload'])) {
 }
 
 // Busca os dados do usuário logado
-$stmt = $pdo->prepare("SELECT nome, email, telefone, criado_em FROM usuarios WHERE id = :id");
+$stmt = $pdo->prepare("SELECT nome, email, telefone, criado_em, foto FROM usuarios WHERE id = :id");
 $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
 $stmt->execute();
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -60,70 +60,51 @@ if (!$usuario) {
 <link rel="stylesheet" href="css/conta.css">
 </head>
 <body>
-<header>
-  <img src="img/logo.jpg" alt="logo" width="100">
-  <h2>Minha Conta</h2>
-  <nav class="navbar">
-    <div class="menu" id="menu">
-      <span></span><span></span><span></span>
-    </div>
-    <ul class="nav-list" id="navList">
-      <li><a class="a" href="index.php">Início</a></li>
-      <li><a class="a" href="carrinho.php">Carrinho</a></li>
-      <li><a class="a" href="contato.php">Contato</a></li>
-      <li><a class="a" href="logout.php">Sair</a></li>
-    </ul>
-  </nav>
+<header class="top-header">
+  <img src="img/logo.jpg" alt="logo" class="logo">
+  
 </header>
+<h1>Sua Conta</h1>
 
 <main class="conta-container">
 
-  <?php if(isset($_SESSION['mensagem'])): ?>
-    <p class="msg"><?php echo $_SESSION['mensagem']; unset($_SESSION['mensagem']); ?></p>
-  <?php endif; ?>
-
   <section class="perfil-card">
     <div class="foto-perfil">
-      <img src="<?php echo !empty($usuario['foto']) ? $usuario['foto'] : 'img/user_default.png'; ?>" alt="Foto de Perfil">
-      <form method="POST" enctype="multipart/form-data">
-        
-      </form>
+      <div class="foto-wrapper">
+        <img src="<?php echo !empty($usuario['foto']) ? $usuario['foto'] : 'img/user_default.png'; ?>" alt="Foto de Perfil">
+        <form method="POST" enctype="multipart/form-data">
+          <label for="foto" class="btn-upload">📷 Alterar Foto</label>
+          <input type="file" name="foto" id="foto" accept="image/*" onchange="this.form.submit()">
+          <input type="hidden" name="upload" value="1">
+        </form>
+      </div>
     </div>
 
     <div class="conta-info">
-      <h3>Informações Pessoais</h3>
-      <p><strong>Nome:</strong> <?php echo htmlspecialchars($usuario['nome']); ?></p>
-      <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
-      <p><strong>Telefone:</strong> <?php echo htmlspecialchars($usuario['telefone']); ?></p>
-      <p><strong>Data de Cadastro:</strong> <?php echo date("d/m/Y", strtotime($usuario['criado_em'])); ?></p>
-      
+      <h3>Suas Informações</h3>
+      <div class="info-grid">
+        <p><strong>Nome:</strong> <?php echo htmlspecialchars($usuario['nome']); ?></p>
+        <p><strong>Email:</strong> <?php echo htmlspecialchars($usuario['email']); ?></p>
+        <p><strong>Telefone:</strong> <?php echo htmlspecialchars($usuario['telefone']); ?></p>
+        <p><strong>Data de Cadastro:</strong> <?php echo date("d/m/Y", strtotime($usuario['criado_em'])); ?></p>
+      </div>
     </div>
   </section>
 
+  <hr>
+
   <section class="conta-actions">
-    <h3>Minhas Ações</h3>
+    <h3>⚙️ Opções da Conta</h3>
     <div class="botoes">
-      <a href="historico.php">🛍️ Histórico de Compras</a>
-      <a href="favoritos.php">❤️ Meus Favoritos</a>
-      <a href="index.php">🏠 Voltar à Loja</a>
-      <a href="logout.php" class="logout-btn">🚪 Sair</a>
+      <a href="historico.php" class="btn">🛍️ Histórico de Compras</a>
+      <a href="index.php" class="btn">🏪 Voltar à Loja</a>
+      <a href="logout.php" class="btn logout-btn">🚪 Sair</a>
     </div>
   </section>
 
 </main>
 
-<footer style="text-align:center; margin-top:2rem;">
-  &copy; 2025 RD Modas — Todos os direitos reservados.
-</footer>
 
-<script>
-  const menu = document.getElementById('menu');
-  const navList = document.getElementById('navList');
-  menu.addEventListener('click', () => {
-    menu.classList.toggle('active');
-    navList.classList.toggle('open');
-    document.body.classList.toggle('menu-open');
-  });
-</script>
+
 </body>
 </html>

@@ -1,0 +1,147 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background: #e2e2e2;
+  color: #222;
+}
+
+header {
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+header nav a:hover {
+  color: #ff5555;
+}
+
+.pagamento-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px;
+  padding-top: 10%;
+  flex-wrap: wrap;
+}
+
+.resumo, .pagamento {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  width: 420px;
+}
+
+.resumo h2, .pagamento h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.item img {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.item h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.total {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.total span {
+  color: gray;
+  font-weight: 700;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: none;
+}
+
+.btn-finalizar {
+  margin-top: 25px;
+  width: 100%;
+  padding: 12px;
+  background: #787c79;
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-finalizar:hover {
+  background: #4e4e4e;
+}
+
+.btn-voltar {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #333;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-voltar:hover {
+  color: #ff5555;
+}
+
+.voltar {
+  display: block;
+  width: fit-content;
+  margin: 40px auto 0;
+  padding: 12px 24px;
+  background: #000;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: 0.3s;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.voltar:hover {
+  background: #333;
+}

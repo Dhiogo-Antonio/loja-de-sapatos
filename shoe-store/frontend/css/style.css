@@ -5,7 +5,7 @@ body {
   padding: 0;
   color: #222;
    min-height: 100vh;
-   flex-direction: column;
+   flex-wrap: wrap;
 }
 
 
@@ -131,6 +131,9 @@ main ul li a.active {
 .product-card:nth-child(8) { animation-delay: 0.8s; }
 .product-card:nth-child(9) { animation-delay: 0.9s; }
 .product-card:nth-child(10) { animation-delay: 1.0s; }
+.product-card:nth-child(11) { animation-delay: 1.1s; }
+.product-card:nth-child(12) { animation-delay: 1.2s; }
+.product-card:nth-child(13) { animation-delay: 1.3s; }
 
 
 
@@ -169,13 +172,13 @@ main ul li a.active {
 }
 
 @media (max-width: 768px) {
+  
   .search-container {
     max-width: 350px;
     margin-right: 5%;
   }
 
   .search-container form {
-    flex-direction: column;
     gap: 0.5rem;
   }
 
@@ -186,10 +189,62 @@ main ul li a.active {
   }
 }
 
+/* 🔹 Responsividade para celular */
 @media (max-width: 480px) {
+  /* Ajusta o container principal */
+  .container {
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+  /* Ajusta os cards */
+ .card {
+  width: 45%;
+  max-width: 100px;
+}
+
+  /* Reduz imagens dentro dos cards */
+  .card img {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  /* Títulos e preços menores */
+  .card h3 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+
+  .card .preco {
+    font-size: 1rem;
+  }
+
+  /* Ajusta o botão */
+  .card button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  /* Reduz tamanho da logo */
+  .img-logo {
+    width: 100px;
+    height: auto;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+  /* Campo de busca menor */
   .search-container {
-    max-width: 80%;
-    margin-right: 20%;
+    width: 90%;
+    margin: 0 auto 15px;
   }
 
   .search-container input[type="text"] {
@@ -198,14 +253,23 @@ main ul li a.active {
   }
 
   .search-container button {
-    font-size: 16px;
+    font-size: 14px;
     padding: 0.6rem 0.8rem;
   }
 
-  .img-logo{
-    padding-right: 20%;
+  /* Cards lado a lado, se couber */
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
+
+   .nav-list.open{
+    height: 100%;
+   }
 }
+
 
 .img-icon{
   height: 40px;

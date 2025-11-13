@@ -158,7 +158,7 @@ $sugestoes = $stmtSug->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </div><br><br>
   <?php endif; ?>
-<footer>&copy; 2025 RD Modas — Todos os direitos reservados.</footer>
+
 
 <script>
 function changeImage(img){

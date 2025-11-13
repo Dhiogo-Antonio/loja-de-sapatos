@@ -267,8 +267,10 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem;
-    flex-shrink: 0;
-    bottom: 10px;
+    bottom: 0px;
+    margin-top: 10px;
+    position: fixed;
+    width: 100%;
 }
 
 
