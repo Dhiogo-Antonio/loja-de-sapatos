@@ -14,21 +14,25 @@ if (isset($_POST['editar_produto'])) {
     $nome = $_POST['nome'];
     $descricao = $_POST['descricao'];
     $preco = $_POST['preco'];
+    $imagem = $_POST['imagem'];
     $estoque = $_POST['estoque'];
 
-    $sql = "UPDATE produtos SET nome=?, descricao=?, preco=?, estoque=? WHERE id=?";
+    $sql = "UPDATE produtos SET nome=?, descricao=?, preco=?, estoque=?, imagem=? WHERE id=?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$nome, $descricao, $preco, $estoque, $id]);
+    $stmt->execute([$nome, $descricao, $preco, $estoque, $imagem, $id]);
+
+    header("Location: produtos.php#id".$id);
+   exit;
 }
 
-// ====== EXCLUIR PRODUTO ======
+
 if (isset($_POST['excluir_produto'])) {
     $id = $_POST['id'];
     $stmt = $pdo->prepare("DELETE FROM produtos WHERE id=?");
     $stmt->execute([$id]);
 }
 
-// ====== BUSCAR PRODUTOS ======
+
 $produtos = $pdo->query("SELECT * FROM produtos ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -73,7 +77,7 @@ td {
 }
 
 tr:hover {
-  background: #f8f8f8;
+  background: #f0f0f0ff;
 }
 
 td button, td a {
@@ -145,7 +149,8 @@ form {
         </thead>
         <tbody>
           <?php foreach ($produtos as $p): ?>
-          <tr>
+          <tr id="id<?= $p['id'] ?>">
+
             <td><?= $p['id'] ?></td>
             <td><?= htmlspecialchars($p['nome']) ?></td>
             <td><?= htmlspecialchars($p['descricao']) ?></td>
@@ -157,6 +162,8 @@ form {
                 <input type="hidden" name="id" value="<?= $p['id'] ?>">
                 <input type="text" name="nome" value="<?= htmlspecialchars($p['nome']) ?>" required>
                 <input type="text" name="descricao" value="<?= htmlspecialchars($p['descricao']) ?>" required>
+                <input type="text" name="imagem" placeholder="URL da Imagem"
+           value="<?= isset($p['imagem']) ? htmlspecialchars($p['imagem']) : '' ?>">
                 <input type="number" step="0.01" name="preco" value="<?= $p['preco'] ?>" required>
                 <input type="number" name="estoque" value="<?= $p['estoque'] ?>" required>
                 <button type="submit" name="editar_produto">Salvar</button>

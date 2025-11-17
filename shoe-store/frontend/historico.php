@@ -50,7 +50,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <hr>
 <main>
   <?php if (empty($pedidos)): ?>
-    <p style="text-align:center; font-size:1.2rem;">🛍️ Você ainda não fez nenhuma compra.</p>
+    <p style="text-align:center; font-size:1.2rem;">Você ainda não fez nenhuma compra.</p>
     <div style="text-align:center;">
     </div>
   <?php else: ?>

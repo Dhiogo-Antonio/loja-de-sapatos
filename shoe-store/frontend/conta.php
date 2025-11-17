@@ -96,9 +96,9 @@ if (!$usuario) {
   <section class="conta-actions">
     <h3>⚙️ Opções da Conta</h3>
     <div class="botoes">
-      <a href="historico.php" class="btn">🛍️ Histórico de Compras</a>
-      <a href="index.php" class="btn">🏪 Voltar à Loja</a>
-      <a href="logout.php" class="btn logout-btn">🚪 Sair</a>
+      <a href="historico.php" class="btn"> Histórico de Compras</a>
+      <a href="index.php" class="btn"> Voltar à Loja</a>
+      <a href="logout.php" class="btn logout-btn">Sair</a>
     </div>
   </section>
 
