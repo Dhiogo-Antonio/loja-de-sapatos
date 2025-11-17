@@ -25,7 +25,7 @@ $totalPedidos = $pdo->query("SELECT COUNT(*) FROM pedidos")->fetchColumn();
 
 <div class="admin-container">
   <aside class="sidebar">
-    <h2>🛒 RD Modas</h2>
+    <img src="../frontend/img/logo.jpg" alt="logo" width="100" class="img-logo">
     <nav>
       <a href="index.php" class="active">📊 Dashboard</a>
       <a href="usuarios.php">👥 Usuários</a>

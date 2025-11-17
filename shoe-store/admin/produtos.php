@@ -122,7 +122,7 @@ form {
 
    <img src="../frontend/img/logo.jpg" alt="logo" width="100" class="img-logo">
     
-    <h2>🛒 RD Modas</h2>
+    
     <nav>
       <a href="index.php">📊 Dashboard</a>
       <a href="usuarios.php">👥 Usuários</a>
