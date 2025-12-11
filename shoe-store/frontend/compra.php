@@ -2,33 +2,33 @@
 session_start();
 include('C:/Turma1/xampp/htdocs/loja-de-sapatos/shoe-store/backend/config/database.php');
 
-// Verifica login
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-// Verifica se há produtos no carrinho
+
 if (empty($_SESSION['cart'])) {
     header("Location: carrinho.php");
     exit;
 }
 
-// Busca produtos do carrinho
+
 $ids = array_keys($_SESSION['cart']);
 $placeholders = implode(',', array_fill(0, count($ids), '?'));
 $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id IN ($placeholders)");
 $stmt->execute($ids);
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Calcula total
+
 $total = 0;
 foreach ($produtos as $p) {
     $qtd = $_SESSION['cart'][$p['id']];
     $total += $p['preco'] * $qtd;
 }
 
-// Processar compra
+
 if (isset($_POST['finalizar'])) {
     $endereco = trim($_POST['endereco']);
     $pagamento = $_POST['pagamento'];

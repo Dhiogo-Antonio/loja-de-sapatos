@@ -189,9 +189,9 @@ main ul li a.active {
   }
 }
 
-/* 🔹 Responsividade para celular */
+
 @media (max-width: 480px) {
-  /* Ajusta o container principal */
+  
   .container {
     padding: 10px;
     flex-direction: column;
@@ -199,13 +199,13 @@ main ul li a.active {
   }
   
 
-  /* Ajusta os cards */
+
  .card {
   width: 45%;
   max-width: 100px;
 }
 
-  /* Reduz imagens dentro dos cards */
+  
   .card img {
     width: 100%;
     height: auto;
@@ -214,7 +214,7 @@ main ul li a.active {
     border-radius: 8px;
   }
 
-  /* Títulos e preços menores */
+ 
   .card h3 {
     font-size: 1rem;
   }
@@ -227,13 +227,12 @@ main ul li a.active {
     font-size: 1rem;
   }
 
-  /* Ajusta o botão */
+  
   .card button {
     font-size: 0.9rem;
     padding: 8px 12px;
   }
 
-  /* Reduz tamanho da logo */
   .img-logo {
     width: 100px;
     height: auto;
@@ -241,7 +240,7 @@ main ul li a.active {
     margin-bottom: 10px;
   }
 
-  /* Campo de busca menor */
+  
   .search-container {
     width: 90%;
     margin: 0 auto 15px;
@@ -257,7 +256,7 @@ main ul li a.active {
     padding: 0.6rem 0.8rem;
   }
 
-  /* Cards lado a lado, se couber */
+  
   .cards-container {
     display: flex;
     flex-wrap: wrap;
